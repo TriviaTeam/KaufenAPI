@@ -43,23 +43,29 @@ class ProductsEndpoints(APIView):
 
 		for data in products_data:
 
-			store = self.get_store_by_name(data['store'])
+			if self.check_data(data):
 
-			if store:
+				store = self.get_store_by_name(data['store'])
 
-				new_product = Product(
-					name=data['name'],
-					category=data['category'],
-					price=data['price']
-				)
-				
-				new_product.store = store
-				new_product.save()
+				if store:
 
-				products.append(new_product)
+					new_product = Product(
+						name=data['name'],
+						category=data['category'],
+						price=data['price']
+					)
+
+					new_product.store = store
+					new_product.save()
+
+					products.append(new_product)
+
+				else:
+					continue
 
 			else:
-				break
+				continue
+			
 
 		if len(products) > 0:
 			serializer = ProductSerializer(products, many=True)
@@ -77,4 +83,15 @@ class ProductsEndpoints(APIView):
 
 		except Store.DoesNotExist:
 			return False
+
+	def check_data(self, data):
+		
+		attrs = ['name','category','price','store']
+		data_attrs = list(data.keys())
+		for attr in data_attrs:
+			if attr not in attrs:
+				return False
+			else:
+				continue
+			
 		
