@@ -7,6 +7,27 @@ from rest_framework.views import APIView
 
 from .serializers import *
 
+
+class ClientGenericEndpoint(APIView):
+
+	def get(self, request, format=None):
+
+		clients = Client.objects.all()
+		serializer = ClientSerializer(clients, many=True)
+
+		return Response(serializer.data)
+
+	def post(self, request, format=None):
+		
+		serializer = ClientSerializer(data=request.data)
+
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class StoreEndpoint(APIView):
 
 	def get(self, request, format=None):
@@ -69,9 +90,9 @@ class ProductsEndpoints(APIView):
 
 		if len(products) > 0:
 			serializer = ProductSerializer(products, many=True)
-			return Response(serializer.data)
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-		return Response({"mensagem":"erro ao salvar produtos"})
+		return Response({"mensagem":"erro ao salvar produtos"}, status=status.HTTP_400_BAD_REQUEST)
 			
 
 	def get_store_by_name(self, store_name):
