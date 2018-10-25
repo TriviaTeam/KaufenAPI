@@ -7,3 +7,13 @@ class StoreSerializer(serializers.ModelSerializer):
 
 		model = Store
 		fields = '__all__'
+
+
+class ProductSerializer(serializers.ModelSerializer):
+
+	store = StoreSerializer()
+
+	class Meta:
+
+		model = Product
+		fields = '__all__'

@@ -52,13 +52,13 @@ class Product(models.Model):
 		max_length=50,
 	)
 
-	price = models.FloatField(
-		('Price'),
+	price = models.IntegerField(
+		('Price in cents'),
 	)
 
 	store = models.ForeignKey(
 		Store,
-		on_delete=models.CASCADE
+		on_delete=models.CASCADE,
 	)
 
 	def __str__(self):
