@@ -1,0 +1,31 @@
+
+version: '3.5'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: kaufenuser
+      POSTGRES_PASSWORD: kaufen123
+      POSTGRES_DB: kaufendb
+      PGDATA: /tmp/pgdata
+    networks:
+      - proxynet
+  
+  web:
+    build: .
+    command: /code/runserver.sh
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - proxynet
+    env_file:
+      - .env
+
+networks:
+  proxynet:
+    name: GamesBI-network
