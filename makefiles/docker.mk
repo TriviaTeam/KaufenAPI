@@ -47,11 +47,11 @@ migrate:
 	sudo docker-compose run web python manage.py migrate api
 
 fixture:
-	# Generate fixtures saved upon importdata models
-	sudo docker-compose run web python manage.py dumpdata importdata --format json > CrossData/importdata/fixtures/data.json
+	# Generate fixtures saved upon api models
+	sudo docker-compose run web python manage.py dumpdata api --format json > kaufenAPI/api/fixtures/data.json
 
 loaddata:
-	# load fixtures saved upon importdata models
+	# load fixtures saved upon api models
 	sudo docker-compose run web python manage.py loaddata data.json
 
 test:
