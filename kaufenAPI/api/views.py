@@ -80,6 +80,7 @@ class ProductsEndpoints(APIView):
 					new_product.save()
 
 					products.append(new_product)
+					continue
 
 				else:
 					continue
@@ -115,6 +116,8 @@ class ProductsEndpoints(APIView):
 			else:
 				continue
 
+		return True
+
 
 class OrderGeneralEndpoints(APIView):
 
@@ -133,7 +136,7 @@ class OrderGeneralEndpoints(APIView):
 
 			client = self.get_client(order_data['client'])
 
-			if client:
+			if (client != False):
 				products = self.get_products(order_data['products'])
 
 				if len(products)>0:
@@ -141,6 +144,8 @@ class OrderGeneralEndpoints(APIView):
 						client=client,
 						total=0
 					)
+
+					order.save()
 
 					for product in products:
 						order.products.add(product)
@@ -171,6 +176,7 @@ class OrderGeneralEndpoints(APIView):
 				return False
 			else:
 				continue
+		return True
 
 	def get_products(self, products_ids):
 		
@@ -190,7 +196,7 @@ class OrderGeneralEndpoints(APIView):
 	def get_client(self, client_id):
 
 		try:
-			client = Client.objects.get(id=id)
+			client = Client.objects.get(id=client_id)
 			return client
 
 		except Client.DoesNotExist:

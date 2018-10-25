@@ -140,7 +140,7 @@ class OrderList(models.Model):
 	    the object.
 	    """
 
-	    return self.id
+	    return str(self.id)
 
 	class Meta:
 	    """
