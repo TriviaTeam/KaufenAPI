@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from .serializers import *
+from . statuscode import StatusCode
 
 
 class ClientEndpoint(APIView):
@@ -152,6 +153,7 @@ class OrderGeneralEndpoints(APIView):
 						order.total += product.price
 
 					order.client = client
+					order.status = StatusCode['in_line']
 					order.save()
 
 					serializer = OrderSerializer(order)

@@ -31,7 +31,7 @@ class Store(models.Model):
 	    """
 	    Some information about Store class.
 	    """
-	    verbose_name = ("Category")
+	    verbose_name = ("Store")
 
 
 class Product(models.Model):
@@ -71,9 +71,10 @@ class Product(models.Model):
 
 	class Meta:
 	    """
-	    Some information about Store class.
+	    Some information about Product class.
 	    """
-	    verbose_name = ("Category")
+	    verbose_name = ("Product")
+
 
 
 class Client(models.Model):
@@ -132,6 +133,10 @@ class OrderList(models.Model):
 
 	total = models.FloatField(
 		('Order total price')
+	)
+
+	status = models.IntegerField(
+		('Order status')
 	)
 
 	def __str__(self):
