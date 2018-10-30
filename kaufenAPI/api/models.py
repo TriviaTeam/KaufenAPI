@@ -136,7 +136,8 @@ class OrderList(models.Model):
 	)
 
 	status = models.IntegerField(
-		('Order status')
+		('Order status'),
+		default=None
 	)
 
 	def __str__(self):
