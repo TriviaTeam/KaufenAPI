@@ -5,3 +5,6 @@ model_mommy
 djangorestframework-jwt
 django_heroku
 django-cors-headers
+requests
+gunicorn
+django-heroku
