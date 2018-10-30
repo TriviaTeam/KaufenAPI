@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'kaufenAPI.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kaufendb',
-        'USER': 'kaufenuser',
-        'PASSWORD': 'kaufen123',
-        'HOST': 'db',
+        'NAME': 'du73fllmkei1o',
+        'USER': 'qztyvwhyvjhomq',
+        'PASSWORD': '36a23bc822165fc262390bd121381177d0b070a7ba12051ace4101a1d881e352',
+        'HOST': 'ec2-23-21-147-71.compute-1.amazonaws.com',
     }
 }
 
