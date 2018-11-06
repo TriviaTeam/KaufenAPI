@@ -81,10 +81,6 @@ class ProductsEndpoints(APIView):
 					new_product.save()
 
 					products.append(new_product)
-					continue
-
-				else:
-					continue
 
 			else:
 				continue
