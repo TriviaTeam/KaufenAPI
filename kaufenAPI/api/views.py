@@ -162,13 +162,13 @@ class OrderGeneralEndpoints(APIView):
 					return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 				else:
-					return Response({"mensagem":"erro ao adicionar produtos à lista"}, status=status.HTTP_400_BAD_REQUEST)
+					return Response({"MENSAGEM DE ERRO":"erro ao adicionar produtos à lista"}, status=status.HTTP_400_BAD_REQUEST)
 
 			else:
-				return Response({"mensagem":"erro ao adicionar cliente à lista"}, status=status.HTTP_400_BAD_REQUEST)
+				return Response({"MENSAGEM DE ERRO":"erro ao adicionar cliente à lista"}, status=status.HTTP_400_BAD_REQUEST)
 
 		else:
-			return Response({"mensagem":"erro ao salvar lista de compras"}, status=status.HTTP_400_BAD_REQUEST)
+			return Response({"MENSAGEM DE ERRO":"erro ao salvar lista de compras"}, status=status.HTTP_400_BAD_REQUEST)
 
 	def check_data(self, data):
 		
