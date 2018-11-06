@@ -211,28 +211,41 @@ class WalletView(APIView):
 	def get(self, request, client_id, format=None):
 
 		client = self.get_client(client_id)
-		wallet = Wallet.objects.get(client=client)
-		serializer = WalletSerializer(wallet)
 
-		return Response(serializer.data)
+		if client == False:
+			return Response({"MENSAGEM DE ERRO":"Cliente não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
+		else:
+			wallet = Wallet.objects.get(client=client)
+			serializer = WalletSerializer(wallet)
+
+			return Response(serializer.data)
 
 	def post(self, request, client_id, format=None):
 		
 		client = self.get_client(client_id)
-		wallet_data = request.data
+		
+		if client == False:
+			return Response({"MENSAGEM DE ERRO":"Cliente não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
 
-		wallet = Wallet(
-			client=client,
-			cvv=wallet_data['cvv'],
-			credit_card_number=wallet_data['credit_card_number']
-		)
+		else:
+			wallet_data = request.data
 
-		wallet.save()
+			wallet = Wallet(
+				client=client,
+				cvv=wallet_data['cvv'],
+				credit_card_number=wallet_data['credit_card_number']
+			)
 
-		serializer = WalletSerializer(wallet)
+			wallet.save()
 
-		return Response(serializer.data, status=status.HTTP_201_CREATED)
+			serializer = WalletSerializer(wallet)
+
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 	def get_client(self, client_id):
-		
-		return Client.objects.get(id=client_id)
+
+		try:
+			client = Client.objects.get(id=client_id)
+			return Client.objects.get(id=client_id)
+		except DoesNotExist:
+			return False
