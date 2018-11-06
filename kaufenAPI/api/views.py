@@ -247,5 +247,5 @@ class WalletView(APIView):
 		try:
 			client = Client.objects.get(id=client_id)
 			return Client.objects.get(id=client_id)
-		except DoesNotExist:
+		except Client.DoesNotExist:
 			return False
