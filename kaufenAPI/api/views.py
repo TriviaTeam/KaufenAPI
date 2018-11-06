@@ -74,10 +74,10 @@ class ProductsEndpoints(APIView):
 					new_product = Product(
 						name=data['name'],
 						category=data['category'],
-						price=data['price']
+						price=data['price'],
 						store=store
 					)
-					
+
 					new_product.save()
 
 					products.append(new_product)
