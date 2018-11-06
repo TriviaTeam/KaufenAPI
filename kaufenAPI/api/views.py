@@ -122,8 +122,9 @@ class ProductsEndpoints(APIView):
 
 class OrderGeneralEndpoints(APIView):
 
-	def get(self, request, format=None):
+	def get(self, request, id=None, format=None):
 
+		print(id)
 		orders = OrderList.objects.all()
 		serializer = OrderSerializer(orders, many=True)
 
