@@ -93,10 +93,10 @@ class ProductsEndpoints(APIView):
 		return Response({"mensagem":"erro ao salvar produtos"}, status=status.HTTP_400_BAD_REQUEST)
 			
 
-	def get_store_by_name(self, store_name):
+	def get_store_by_name(self, store_id):
 		
 		try:
-			store = Store.objects.get(name=store_name)
+			store = Store.objects.get(id=store_id)
 			print("Loja já cadastrada")
 			return store
 
