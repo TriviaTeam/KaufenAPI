@@ -69,15 +69,15 @@ class ProductsEndpoints(APIView):
 
 				store = self.get_store_by_name(data['store'])
 
-				if store:
+				if store != False:
 
 					new_product = Product(
 						name=data['name'],
 						category=data['category'],
 						price=data['price']
+						store=store
 					)
-
-					new_product.store = store
+					
 					new_product.save()
 
 					products.append(new_product)
