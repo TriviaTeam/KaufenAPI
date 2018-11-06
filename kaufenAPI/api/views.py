@@ -204,3 +204,35 @@ class OrderGeneralEndpoints(APIView):
 
 		except Client.DoesNotExist:
 			return False
+
+
+class WalletView(APIView):
+
+	def get(self, request, client_id, format=None):
+
+		client = self.get_client(client_id)
+		wallet = Wallet.objects.get(client=client)
+		serializer = WalletSerializer(wallet)
+
+		return Response(serializer.data)
+
+	def post(self, request, client_id, format=None):
+		
+		client = self.get_client(client_id)
+		wallet_data = request.data
+
+		wallet = Wallet(
+			client=client,
+			cvv=wallet_data['cvv'],
+			credit_card_number=wallet_data['credit_card_number']
+		)
+
+		wallet.save()
+
+		serializer = WalletSerializer(wallet)
+
+		return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+	def get_client(self, client_id):
+		
+		return Client.objects.get(id=client_id)

@@ -39,3 +39,13 @@ class OrderSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 
+class WalletSerializer(serializers.ModelSerializer):
+
+	client = ClientSerializer()
+
+	class Meta:
+
+		model = Wallet
+		fields = '__all__'
+
+
