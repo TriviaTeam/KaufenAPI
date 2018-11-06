@@ -116,6 +116,28 @@ class Client(models.Model):
 	    verbose_name_plural = ("Clients")
 
 
+class Wallet(models.Model):
+
+	id = models.AutoField(
+		primary_key=True
+	)
+
+	client = models.ForeignKey(
+		Client,
+		on_delete=models.CASCADE
+	)
+
+	cvv = models.IntegerField(
+		('Credit card CVV'),
+		default=None
+	)
+
+	credit_card_number = models.CharField(
+		('Credit card number'),
+		default=None
+	)
+
+
 class OrderList(models.Model):
 
 	id = models.AutoField(
@@ -128,7 +150,7 @@ class OrderList(models.Model):
 	)
 
 	products = models.ManyToManyField(
-		Product
+		Product,
 	)
 
 	total = models.FloatField(
