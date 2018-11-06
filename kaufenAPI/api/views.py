@@ -114,8 +114,6 @@ class ProductsEndpoints(APIView):
 		for attr in data_attrs:
 			if attr not in attrs:
 				return False
-			else:
-				continue
 
 		return True
 
