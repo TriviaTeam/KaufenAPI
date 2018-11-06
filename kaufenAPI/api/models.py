@@ -129,12 +129,13 @@ class Wallet(models.Model):
 
 	cvv = models.IntegerField(
 		('Credit card CVV'),
-		default=None
+		default=None,
 	)
 
 	credit_card_number = models.CharField(
 		('Credit card number'),
-		default=None
+		default=None,
+		max_length=20,
 	)
 
 
