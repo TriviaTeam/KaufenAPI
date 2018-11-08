@@ -199,7 +199,7 @@ class OrderGeneralEndpoints(APIView):
 			return False
 
 
-class OrdersProductsView(APIView):
+class OrderView(APIView):
 
 	def get(self, request, id=None, format=None):
 
