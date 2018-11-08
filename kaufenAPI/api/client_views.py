@@ -52,10 +52,7 @@ class ClientOrdersViewEndpoint(APIView):
 
 		data = {}
 
-		if client_id == None:
-			data = {"ERRO":"Cliente não especificado"}
-
-		else:
+		try:
 			client = Client.objects.get(id=client_id)
 			orders = OrderList.objects.filter(client=client)
 			any_product_orders = self.get_any_products_orders(client)
@@ -67,7 +64,14 @@ class ClientOrdersViewEndpoint(APIView):
 				"any_product_orders":any_product_orders
 			}
 
-		return Response(data)
+			status_code = status.HTTP_200_OK
+
+		except Client.DoesNotExist:
+
+			data = {"ERRO":"CLIENTE NÃO ENCONTRADO"}
+			status_code = status.HTTP_400_BAD_REQUEST
+
+		return Response(data, status=status_code)
 
 	def get_any_products_orders(self, client):
 
