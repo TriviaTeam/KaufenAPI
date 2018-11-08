@@ -68,3 +68,10 @@ class ClientOrdersViewEndpoint(APIView):
 			}
 
 		return Response(data)
+
+	def get_any_products_orders(self, client):
+
+		orders = AnyProductOrder.objects.filter(client=client)
+		serializer = AnyProductOrderSerializer(orders, many=True)
+
+		return serializer.data
