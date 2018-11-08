@@ -51,8 +51,6 @@ class AnyProductOrderSerializer(serializers.ModelSerializer):
 
 class AnyProductSerializer(serializers.ModelSerializer):
 
-	order = AnyProductOrderSerializer()
-
 	class Meta:
 
 		model = AnyProduct
