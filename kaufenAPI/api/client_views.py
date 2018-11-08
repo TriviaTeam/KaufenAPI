@@ -53,11 +53,12 @@ class ClientOrdersViewEndpoint(APIView):
 		data = {}
 
 		try:
-			client = Client.objects.get(id=client_id)
-			orders = OrderList.objects.filter(client=client)
-			any_product_orders = self.get_any_products_orders(client)
 
+			client = Client.objects.get(id=client_id)
+
+			orders = OrderList.objects.filter(client=client)
 			serializer_orders = OrderSerializer(orders, many=True)
+			any_product_orders = self.get_any_products_orders(client)
 
 			data = {
 				"orders":serializer_orders.data,
@@ -75,7 +76,26 @@ class ClientOrdersViewEndpoint(APIView):
 
 	def get_any_products_orders(self, client):
 
-		orders = AnyProductOrder.objects.filter(client=client)
-		serializer = AnyProductOrderSerializer(orders, many=True)
+		data = []
+		any_product_orders = AnyProductOrder.objects.filter(client=client)
+
+		for order in any_product_orders:
+				serializer = AnyProductOrderSerializer(order)
+				products = self.get_order_products(order)
+				data.append(
+					{
+						"order":{
+							"order-info":serializer.data,
+							"products":products
+						}
+					}
+				)
+
+		return data
+
+	def get_order_products(self,order):
+
+		products = AnyProduct.objects.filter(order=order)
+		serializer = AnyProductSerializer(products, many=True)
 
 		return serializer.data
