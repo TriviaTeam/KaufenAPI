@@ -330,7 +330,7 @@ class AnyProductOrdersView(APIView):
 			
 			new_product = AnyProduct(
 				name=data['name'],
-				where_to_find['where_to_find'],
+				where_to_find=data['where_to_find'],
 				order=order
 			)
 
