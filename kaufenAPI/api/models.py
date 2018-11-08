@@ -177,3 +177,78 @@ class OrderList(models.Model):
 	    """
 	    verbose_name = ("Order")
 	    verbose_name_plural = ("Orders")
+
+
+class AnyProductOrder(models.Model):
+
+	id = models.AutoField(
+		primary_key=True
+	)
+
+	client = models.ForeignKey(
+		Client,
+		on_delete=models.CASCADE
+	)
+
+	total = models.FloatField(
+		('Order total price')
+	)
+
+	status = models.IntegerField(
+		('Order status'),
+		default=None
+	)
+
+	def __str__(self):
+	    """
+	    Returns the object as a string, the attribute that will represent
+	    the object.
+	    """
+
+	    return str(self.id)
+
+	class Meta:
+	    """
+	    Some information about AnyProductOrder class.
+	    """
+	    verbose_name = ("Any Product Order")
+
+
+class AnyProduct(models.Model):
+
+	id = models.AutoField(
+		primary_key=True
+	)
+
+	name = models.CharField(
+		('Name'),
+		help_text=("Product Name"),
+		max_length=100,
+	)
+
+	where_to_find = models.CharField(
+		('Where to Find'),
+		max_length=100,
+	)
+
+	order = models.ForeignKey(
+		AnyProductOrder,
+		on_delete=models.CASCADE
+	)
+
+	def __str__(self):
+	    """
+	    Returns the object as a string, the attribute that will represent
+	    the object.
+	    """
+
+	    return str(self.name)
+
+	class Meta:
+	    """
+	    Some information about AnyProduct class.
+	    """
+	    verbose_name = ("Any Product")
+	    verbose_name_plural = ("Any Products")
+		
+		
