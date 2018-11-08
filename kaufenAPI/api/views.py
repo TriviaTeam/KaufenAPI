@@ -125,7 +125,7 @@ class OrderGeneralEndpoints(APIView):
 			serializer = OrderSerializer(orders, many=True)
 		else:
 			order = OrderList.objects.get(id=id)
-			serializer = OrderSerializer(order)
+			serializer = ProductSerializer(order.products, many=True)
 
 		return Response(serializer.data)
 
