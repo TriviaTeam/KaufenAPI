@@ -308,8 +308,8 @@ class AnyProductOrdersView(APIView):
 				data.append(
 					{
 						"order":{
-							serializer.data,
-							products
+							"order-info":serializer.data,
+							"products":products
 						}
 					}
 				)
