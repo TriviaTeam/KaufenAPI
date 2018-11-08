@@ -116,16 +116,10 @@ class ProductsEndpoints(APIView):
 
 class OrderGeneralEndpoints(APIView):
 
-	def get(self, request, id=None, format=None):
+	def get(self, request, format=None):
 
-		print(id)
-
-		if id==None:
-			orders = OrderList.objects.all()
-			serializer = OrderSerializer(orders, many=True)
-		else:
-			order = OrderList.objects.get(id=id)
-			serializer = ProductSerializer(order.products, many=True)
+		orders = OrderList.objects.all()
+		serializer = OrderSerializer(orders, many=True)
 
 		return Response(serializer.data)
 
@@ -203,6 +197,22 @@ class OrderGeneralEndpoints(APIView):
 
 		except Client.DoesNotExist:
 			return False
+
+
+class OrdersProductsView(APIView):
+
+	def get(self, request, id=None, format=None):
+
+		data = {}
+
+		if id==None:
+			data = {"ERRO":"Lista não encontrada"}
+		else:
+			order = OrderList.objects.get(id=id)
+			serializer = ProductSerializer(order.products, many=True)
+			data = serializer.data
+
+		return Response(data)
 
 
 class WalletView(APIView):
