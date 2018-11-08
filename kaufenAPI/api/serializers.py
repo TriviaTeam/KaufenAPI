@@ -56,7 +56,7 @@ class AnyProductSerializer(serializers.ModelSerializer):
 	class Meta:
 
 		model = AnyProduct
-		fields = '__all__'
+		fields = ['name', 'where_to_find']
 
 
 class OrderSerializer(serializers.ModelSerializer):
