@@ -298,13 +298,20 @@ class AnyProductOrdersView(APIView):
 
 	def get(self, request, order_id=None, format=None):
 
-		data = {}
+		data = []
 		
 		if order_id==None:
 			orders = AnyProductOrder.objects.all()
-			serializer = AnyProductOrderSerializer(orders, many=True)
+			for order in orders:
+				serializer = AnyProductOrderSerializer(order)
+				products = self.get_order_products(order)
+				data.append(
+					{
+						"order":serializer.data,
+						"products":products
+					}
+				)
 
-			data = serializer.data
 			status_code = status.HTTP_400_BAD_REQUEST
 
 		else:
@@ -315,6 +322,14 @@ class AnyProductOrdersView(APIView):
 			status_code = status.HTTP_200_OK
 
 		return Response(data, status=status_code)
+
+	def get_order_products(self,order):
+
+		products = AnyProduct.objects.filter(order=order)
+		serializer = AnyProductSerializer(products, many=True)
+		data.append(serializer.data)
+
+		return serializer.data
 
 	def post(self, request, order_id=None, format=None):
 		
