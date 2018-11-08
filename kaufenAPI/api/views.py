@@ -207,14 +207,14 @@ class OrderView(APIView):
 
 		if id==None:
 			data = {"ERRO":"Lista não encontrada"}
-			status = status.HTTP_400_BAD_REQUEST
+			status_code = status.HTTP_400_BAD_REQUEST
 		else:
 			order = OrderList.objects.get(id=id)
 			serializer = OrderSerializer(order)
 			data = serializer.data
-			status = status.HTTP_200_OK
+			status_code = status.HTTP_200_OK
 
-		return Response(data, status=status)
+		return Response(data, status=status_code)
 
 	def post(self, request, id=None, format=None):
 		
@@ -222,7 +222,7 @@ class OrderView(APIView):
 
 		if id==None:
 			data = {"ERRO":"Lista não encontrada"}
-			status = status.HTTP_400_BAD_REQUEST
+			status_code = status.HTTP_400_BAD_REQUEST
 		else:
 			order = OrderList.objects.get(id=id)
 			products = self.get_products(request.data['products'])
@@ -233,9 +233,9 @@ class OrderView(APIView):
 
 			serializer = OrderSerializer(order)
 			data = serializer.data
-			status = status.HTTP_201_CREATED
+			status_code = status.HTTP_201_CREATED
 
-		return Response(data,status=status)
+		return Response(data,status=status_code)
 
 	def delete(self, request, id=None, format=None):
 		
