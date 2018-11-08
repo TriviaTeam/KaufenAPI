@@ -4,9 +4,19 @@ from django.http import Http404
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-
-from .serializers import *
 from .statuscode import StatusCode
+
+from .serializers import(
+	ClientSerializer, ProductSerializer,
+	OrderSerializer, AnyProductOrderSerializer,
+	AnyProductSerializer, WalletSerializer
+)
+
+from .models import (
+	Product, Client,
+	Wallet, OrderList,
+	AnyProductOrder, AnyProduct,	
+)
 
 
 class ClientEndpoint(APIView):
@@ -36,14 +46,6 @@ class ClientEndpoint(APIView):
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-	def get_any_products_orders(self, client):
-
-		orders = AnyProductOrder.objects.filter(client=client)
-		serializer = AnyProductOrderSerializer(orders, many=True)
-
-		return serializer.data
 
 
 class ClientOrdersViewEndpoint(APIView):
