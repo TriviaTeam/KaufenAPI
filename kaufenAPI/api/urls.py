@@ -3,6 +3,7 @@ from .views import *
 from .client_views import ClientEndpoint, ClientOrdersViewEndpoint
 from .store_view import StoreEndpoint
 from .products_view import ProductsEndpoints
+from .orders_views import OrderGeneralEndpoints, OrderView
 
 urlpatterns = [
     path('store/', StoreEndpoint.as_view(), name="store-endpoint"),
