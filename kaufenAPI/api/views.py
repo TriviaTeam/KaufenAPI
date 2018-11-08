@@ -23,14 +23,13 @@ class ClientEndpoint(APIView):
 		else:
 			client = Client.objects.get(id=client_id)
 			orders = OrderList.objects.filter(client=client)
-			any_product_orders = AnyProductOrder.objects.filter(client=client_id)
+			any_product_orders = self.get_any_products_orders(client)
 
 			serializer_orders = OrderSerializer(orders, many=True)
-			serializer_any_product_order = AnyProductOrderSerializer(any_product_orders, many=True)
 
 			data = {
 				"orders":serializer_orders.data,
-				"any_product_orders":serializer_any_product_order.data
+				"any_product_orders":any_product_orders
 			}
 
 		return Response(data)
@@ -44,6 +43,12 @@ class ClientEndpoint(APIView):
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+	def get_any_products_orders(self, client):
+
+		orders = AnyProductOrder.objects.filter(client=client)
+		serializer = AnyProductOrderSerializer(orders, many=True)
 
 
 class StoreEndpoint(APIView):
