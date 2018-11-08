@@ -322,7 +322,7 @@ class AnyProductOrdersView(APIView):
 
 			new_order.save()
 
-			products = self.create_any_products(request.data['products'], order)
+			products = self.create_any_products(request.data['products'], new_order)
 
 			if len(products) > 0:
 				order_serializer = AnyProductOrderSerializer(new_order)
