@@ -119,7 +119,7 @@ class OrderGeneralEndpoints(APIView):
 	def get(self, request, id=None, format=None):
 
 		print(id)
-		
+
 		if id==None:
 			orders = OrderList.objects.all()
 			serializer = OrderSerializer(orders, many=True)
@@ -143,6 +143,7 @@ class OrderGeneralEndpoints(APIView):
 				if len(products)>0:
 					order = OrderList(
 						client=client,
+						status=StatusCode['in_line']
 						total=0
 					)
 
@@ -153,7 +154,6 @@ class OrderGeneralEndpoints(APIView):
 						order.total += product.price
 
 					order.client = client
-					order.status = StatusCode['in_line']
 					order.save()
 
 					serializer = OrderSerializer(order)
