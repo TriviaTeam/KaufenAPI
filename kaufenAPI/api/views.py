@@ -233,6 +233,23 @@ class OrderView(APIView):
 
 		return Response(data)
 
+	def delete(self, request, id=None, format=None):
+		
+		if id==None:
+			data = {"ERRO":"Lista não encontrada"}
+		else:
+			order = OrderList.objects.get(id=id)
+			products = self.get_products(request.data['products'])
+			for product in products:
+				order.products.remove(product)
+				order.total -= product.price
+				order.save()
+
+			serializer = OrderSerializer(order)
+			data = serializer.data
+
+		return Response(data)
+
 	def get_products(self, products_ids):
 		
 		products = []
