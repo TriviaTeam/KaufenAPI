@@ -209,7 +209,7 @@ class OrdersProductsView(APIView):
 			data = {"ERRO":"Lista não encontrada"}
 		else:
 			order = OrderList.objects.get(id=id)
-			serializer = ProductSerializer(order.products, many=True)
+			serializer = OrderSerializer(order)
 			data = serializer.data
 
 		return Response(data)
