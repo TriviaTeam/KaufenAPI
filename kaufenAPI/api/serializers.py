@@ -39,6 +39,37 @@ class OrderSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 
+class AnyProductOrderSerializer(serializers.ModelSerializer):
+
+	client = ClientSerializer()
+
+	class Meta:
+
+		model = AnyProductOrder
+		fields = '__all__'
+
+
+class AnyProductSerializer(serializers.ModelSerializer):
+
+	order = AnyProductOrderSerializer()
+
+	class Meta:
+
+		model = AnyProduct
+		fields = '__all__'
+
+
+class OrderSerializer(serializers.ModelSerializer):
+
+	products = ProductSerializer(many=True)
+	client = ClientSerializer()
+
+	class Meta:
+
+		model = OrderList
+		fields = '__all__'
+
+
 class WalletSerializer(serializers.ModelSerializer):
 
 	client = ClientSerializer()

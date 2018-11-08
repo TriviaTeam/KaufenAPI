@@ -270,6 +270,27 @@ class OrderView(APIView):
 		return products
 
 
+class AnyProductOrdersView(APIView):
+
+	def get(self, request, order_id=None, format=None):
+
+		data = {}
+		
+		if order_id==None:
+			orders = AnyProductOrder.objects.all()
+			serializer = AnyProductOrderSerializer(orders, many=True)
+
+			data = serializer.data
+
+		else:
+			order = AnyProductOrder.objects.get(id=order_id)
+			serializer = AnyProductOrderSerializer(order)
+
+			data = serializer.data
+
+		return Response(data)
+
+
 class WalletView(APIView):
 
 	def get(self, request, client_id, format=None):
