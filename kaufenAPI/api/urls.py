@@ -8,5 +8,6 @@ urlpatterns = [
     path('clients/<int:client_id>/wallet/', WalletView.as_view(), name="clients-wallet-endpoint"),
     path('orders/', OrderGeneralEndpoints.as_view(), name="orders-endpoint"),
     path('orders/<int:id>/', OrderView.as_view(), name="orders-products-endpoint"),
+    path('orders/any/', AnyProductOrdersView.as_view(), name="-any-orders-endpoint"),
     path('orders/any/<int:order_id>/', AnyProductOrdersView.as_view(), name="-any-orders-endpoint"),
 ]
