@@ -281,14 +281,73 @@ class AnyProductOrdersView(APIView):
 			serializer = AnyProductOrderSerializer(orders, many=True)
 
 			data = serializer.data
+			status_code = status.HTTP_400_BAD_REQUEST
 
 		else:
 			order = AnyProductOrder.objects.get(id=order_id)
 			serializer = AnyProductOrderSerializer(order)
 
 			data = serializer.data
+			status_code = status.HTTP_200_OK
 
-		return Response(data)
+		return Response(data, status=status_code)
+
+	def post(self, request, order_id=None, format=None):
+		
+		client = self.get_client(request.data['client_id'])
+
+		if client != False:
+			new_order = AnyProductOrder(
+				client=client
+			)
+
+			new_order.save()
+
+			products = self.create_any_products(request.data['products'], order)
+
+			if len(products) > 0:
+				order_serializer = AnyProductOrderSerializer(new_order)
+				product_serializer = AnyProductSerializer(products, many=True)
+
+				data = {
+					"order":order_serializer.data,
+					"products":product_serializer.data
+				}
+
+				return Response(data,status=status.HTTP_201_CREATED)
+
+			else:
+				return Response({"ERRO":"Não foi possivel criar lista"},status=status.HTTP_400_BAD_REQUEST)
+
+		else:
+			return Response({"ERRO":"Cliente não encontrado"},status=status.HTTP_400_BAD_REQUEST)
+
+	def create_any_products(self, products_data, order):
+
+		created_products = []
+		
+		for data in products_data:
+			
+			new_product = AnyProduct(
+				name=data['name'],
+				where_to_find['where_to_find'],
+				order=order
+			)
+
+			new_product.save()
+
+			created_products.append(new_product)
+
+		return created_products
+
+	def get_client(self, client_id):
+
+		try:
+			client = Client.objects.get(id=client_id)
+			return client
+
+		except Client.DoesNotExist:
+			return False
 
 
 class WalletView(APIView):
