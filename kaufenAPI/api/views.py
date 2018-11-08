@@ -50,6 +50,8 @@ class ClientEndpoint(APIView):
 		orders = AnyProductOrder.objects.filter(client=client)
 		serializer = AnyProductOrderSerializer(orders, many=True)
 
+		return serializer.data
+
 
 class StoreEndpoint(APIView):
 
