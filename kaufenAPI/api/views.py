@@ -327,7 +327,6 @@ class AnyProductOrdersView(APIView):
 
 		products = AnyProduct.objects.filter(order=order)
 		serializer = AnyProductSerializer(products, many=True)
-		data.append(serializer.data)
 
 		return serializer.data
 
