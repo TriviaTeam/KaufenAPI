@@ -214,6 +214,40 @@ class OrdersProductsView(APIView):
 
 		return Response(data)
 
+	def post(self, request, id=None, format=None):
+		
+		data = {}
+
+		if id==None:
+			data = {"ERRO":"Lista não encontrada"}
+		else:
+			order = OrderList.objects.get(id=id)
+			products = self.get_products(request.data['products'])
+			for product in products:
+				order.products.add(product)
+				order.total += product.price
+				order.save()
+
+			serializer = OrderSerializer(order)
+			data = serializer.data
+
+		return Response(data)
+
+	def get_products(self, products_ids):
+		
+		products = []
+
+		for id in products_ids:
+
+			try:
+				product = Product.objects.get(id=id)
+				products.append(product)
+
+			except Product.DoesNotExist:
+				continue
+
+		return products
+
 
 class WalletView(APIView):
 
