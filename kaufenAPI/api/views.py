@@ -9,26 +9,6 @@ from .serializers import *
 from .statuscode import StatusCode
 
 
-class StoreEndpoint(APIView):
-
-	def get(self, request, format=None):
-
-		stores = Store.objects.all()
-		serializer = StoreSerializer(stores, many=True)
-
-		return Response(serializer.data)
-
-	def post(self, request, format=None):
-
-		serializer = StoreSerializer(data=request.data)
-
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class ProductsEndpoints(APIView):
 
 	def get(self, request, format=None):

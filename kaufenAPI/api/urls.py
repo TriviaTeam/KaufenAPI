@@ -1,6 +1,7 @@
 from django.urls import include, path
 from .views import *
-from.client_views import *
+from .client_views import *
+from .store_view import StoreEndpoint
 
 urlpatterns = [
     path('store/', StoreEndpoint.as_view(), name="store-endpoint"),
