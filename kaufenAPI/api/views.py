@@ -11,12 +11,29 @@ from . statuscode import StatusCode
 
 class ClientEndpoint(APIView):
 
-	def get(self, request, format=None):
+	def get(self, request, client_id=None, format=None):
 
-		clients = Client.objects.all()
-		serializer = ClientSerializer(clients, many=True)
+		data = {}
 
-		return Response(serializer.data)
+		if client_id == None:
+			clients = Client.objects.all()
+			serializer = ClientSerializer(clients, many=True)
+			data = serializer.data
+
+		else:
+			client = Client.objects.get(id=client_id)
+			orders = OrderList.objects.filter(client=client)
+			any_product_orders = AnyProductOrder.objects.filter(client=client_id)
+
+			serializer_orders = OrderSerializer(orders, many=True)
+			serializer_any_product_order = AnyProductOrderSerializer(any_product_orders, many=True)
+
+			data = {
+				"orders":serializer_orders.data,
+				"any_product_orders":serializer_any_product_order.data
+			}
+
+		return Response(data)
 
 	def post(self, request, format=None):
 		
