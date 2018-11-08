@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from .serializers import StoreSerializer
 from .statuscode import StatusCode
+from .models import Store
 
 
 class StoreEndpoint(APIView):
