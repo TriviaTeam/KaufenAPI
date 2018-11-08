@@ -307,8 +307,10 @@ class AnyProductOrdersView(APIView):
 				products = self.get_order_products(order)
 				data.append(
 					{
-						"order":serializer.data,
-						"products":products
+						"order":{
+							serializer.data,
+							products
+						}
 					}
 				)
 
