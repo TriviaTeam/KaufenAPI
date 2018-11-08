@@ -315,7 +315,9 @@ class AnyProductOrdersView(APIView):
 
 		if client != False:
 			new_order = AnyProductOrder(
-				client=client
+				client=client,
+				total=0,
+				status=StatusCode['in_line'],
 			)
 
 			new_order.save()
