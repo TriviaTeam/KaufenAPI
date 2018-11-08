@@ -143,7 +143,7 @@ class OrderGeneralEndpoints(APIView):
 				if len(products)>0:
 					order = OrderList(
 						client=client,
-						status=StatusCode['in_line']
+						status=StatusCode['in_line'],
 						total=0
 					)
 
