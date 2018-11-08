@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from .serializers import *
-from . statuscode import StatusCode
+from .statuscode import StatusCode
 
 
 class ClientEndpoint(APIView):
