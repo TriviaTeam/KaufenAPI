@@ -112,6 +112,8 @@ class WalletView(APIView):
 		if client == False:
 			return Response({"MENSAGEM DE ERRO":"Cliente não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
 		else:
+			print(client.name)
+			print(client.id)
 			wallet = Wallet.objects.get(client=client)
 			serializer = WalletSerializer(wallet)
 
