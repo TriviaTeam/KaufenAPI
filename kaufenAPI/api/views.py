@@ -33,9 +33,17 @@ class AnyProductOrdersView(APIView):
 
 		else:
 			order = AnyProductOrder.objects.get(id=order_id)
-			serializer = AnyProductOrderSerializer(order)
+			order_serializer = AnyProductOrderSerializer(order)
+			products = AnyProduct.objects.filter(order=order)
+			products_serializer = AnyProductSerializer(products, many=True)
 
-			data = serializer.data
+			data = {
+				"order":{
+					"order-info":serializer.data,
+					"products":products_serializer.data
+				}
+			}
+			
 			status_code = status.HTTP_200_OK
 
 		return Response(data, status=status_code)
