@@ -52,32 +52,34 @@ class AnyProductOrdersView(APIView):
 		client = self.get_client(request.data['client_id'])
 
 		if client != False:
-			new_order = AnyProductOrder(
-				client=client,
-				total=0,
-				status=StatusCode['in_line'],
-			)
 
-			new_order.save()
+			if order_id != None:
+				order = self.get_order(order_id)
 
-			products = self.create_any_products(request.data['products'], new_order)
-
-			if len(products) > 0:
-				order_serializer = AnyProductOrderSerializer(new_order)
-				product_serializer = AnyProductSerializer(products, many=True)
-
-				data = {
-					"order":order_serializer.data,
-					"products":product_serializer.data
-				}
-
-				return Response(data,status=status.HTTP_201_CREATED)
-
+				if order!=False:
+					products = self.create_any_products(request.data['products'], order)
+					self.return_response_created_products(products)
+				else:
+					return Response({"ERRO":"Ordem não encontrada"},status=status.HTTP_400_BAD_REQUEST)
 			else:
-				return Response({"ERRO":"Não foi possivel criar lista"},status=status.HTTP_400_BAD_REQUEST)
+				order = self.create_new_order(request, client)
+				products = self.create_any_products(request.data['products'], order)
+				self.return_response_created_products(products)
 
 		else:
 			return Response({"ERRO":"Cliente não encontrado"},status=status.HTTP_400_BAD_REQUEST)
+
+	def create_new_order(self, request, client):
+		
+		new_order = AnyProductOrder(
+			client=client,
+			total=0,
+			status=StatusCode['in_line'],
+		)
+
+		new_order.save()
+
+		return new_order
 
 	def create_any_products(self, products_data, order):
 
@@ -105,3 +107,28 @@ class AnyProductOrdersView(APIView):
 
 		except Client.DoesNotExist:
 			return False
+
+	def get_order(self, order_id):
+
+		try:
+			order = AnyProductOrder.objects.get(id=order_id)
+			return order
+
+		except AnyProductOrder.DoesNotExist:
+			return False
+
+	def return_response_created_products(self, products):
+
+		if len(products) > 0:
+			order_serializer = AnyProductOrderSerializer(new_order)
+			product_serializer = AnyProductSerializer(products, many=True)
+
+			data = {
+				"order":order_serializer.data,
+				"products":product_serializer.data
+			}
+
+			return Response(data,status=status.HTTP_201_CREATED)
+
+		else:
+			return Response({"ERRO":"Não foi possível adicionar produtos à lista"},status=status.HTTP_400_BAD_REQUEST)
