@@ -65,13 +65,13 @@ class AnyProductOrdersView(APIView):
 
 				if order!=False:
 					products = self.create_any_products(request.data['products'], order)
-					self.return_response_created_products(products)
+					self.return_response_created_products(products, order)
 				else:
 					return Response({"ERRO":"Ordem não encontrada"},status=status.HTTP_400_BAD_REQUEST)
 			else:
 				order = self.create_new_order(request, client)
 				products = self.create_any_products(request.data['products'], order)
-				self.return_response_created_products(products)
+				self.return_response_created_products(products, order)
 
 		else:
 			return Response({"ERRO":"Cliente não encontrado"},status=status.HTTP_400_BAD_REQUEST)
@@ -131,10 +131,10 @@ class AnyProductOrdersView(APIView):
 		except AnyProductOrder.DoesNotExist:
 			return False
 
-	def return_response_created_products(self, products):
+	def return_response_created_products(self, products, order):
 
 		if len(products) > 0:
-			order_serializer = AnyProductOrderSerializer(new_order)
+			order_serializer = AnyProductOrderSerializer(order)
 			product_serializer = AnyProductSerializer(products, many=True)
 
 			data = {
