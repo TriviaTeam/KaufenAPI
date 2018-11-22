@@ -39,7 +39,7 @@ class AnyProductOrdersView(APIView):
 
 			data = {
 				"order":{
-					"order-info":serializer.data,
+					"order-info":order_serializer.data,
 					"products":products_serializer.data
 				}
 			}
