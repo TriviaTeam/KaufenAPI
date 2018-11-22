@@ -32,28 +32,27 @@ class AnyProductOrdersView(APIView):
 			status_code = status.HTTP_400_BAD_REQUEST
 
 		else:
-			order = AnyProductOrder.objects.get(id=order_id)
-			order_serializer = AnyProductOrderSerializer(order)
-			products = AnyProduct.objects.filter(order=order)
-			products_serializer = AnyProductSerializer(products, many=True)
+			order = self.get_order(order_id)
 
-			data = {
-				"order":{
-					"order-info":order_serializer.data,
-					"products":products_serializer.data
+			if order !=False:
+				order_serializer = AnyProductOrderSerializer(order)
+				products = AnyProduct.objects.filter(order=order)
+				products_serializer = AnyProductSerializer(products, many=True)
+
+				data = {
+					"order":{
+						"order-info":order_serializer.data,
+						"products":products_serializer.data
+					}
 				}
-			}
-			
-			status_code = status.HTTP_200_OK
+
+				status_code = status.HTTP_200_OK
+
+			else:
+				data = {"ERRO":"Ordem não encontrada"}
+				status_code=status.HTTP_400_BAD_REQUEST
 
 		return Response(data, status=status_code)
-
-	def get_order_products(self,order):
-
-		products = AnyProduct.objects.filter(order=order)
-		serializer = AnyProductSerializer(products, many=True)
-
-		return serializer.data
 
 	def post(self, request, order_id=None, format=None):
 		
@@ -76,6 +75,13 @@ class AnyProductOrdersView(APIView):
 
 		else:
 			return Response({"ERRO":"Cliente não encontrado"},status=status.HTTP_400_BAD_REQUEST)
+
+	def get_order_products(self,order):
+
+		products = AnyProduct.objects.filter(order=order)
+		serializer = AnyProductSerializer(products, many=True)
+
+		return serializer.data
 
 	def create_new_order(self, request, client):
 		
