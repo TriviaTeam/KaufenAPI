@@ -133,16 +133,4 @@ class AnyProductOrdersView(APIView):
 
 	def return_response_created_products(self, products, order):
 
-		if len(products) > 0:
-			order_serializer = AnyProductOrderSerializer(order)
-			product_serializer = AnyProductSerializer(products, many=True)
-
-			data = {
-				"order":order_serializer.data,
-				"products":product_serializer.data
-			}
-
-			return Response(data,status=status.HTTP_201_CREATED)
-
-		else:
-			return Response({"ERRO":"Não foi possível adicionar produtos à lista"},status=status.HTTP_400_BAD_REQUEST)
+		return Response({"DEU":"CERTO"},status=status.HTTP_400_BAD_REQUEST)
