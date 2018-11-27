@@ -11,7 +11,6 @@ urlpatterns = [
     path('clients/', ClientEndpoint.as_view(), name="clients-endpoint"),
     path('clients/<str:client_id>/', ClientEndpoint.as_view(), name="clients-endpoint"),
     path('clients/<str:client_id>/orders/', ClientOrdersViewEndpoint.as_view(), name="clients-endpoint"),
-    path('clients/<int:client_id>/wallet/', WalletView.as_view(), name="clients-wallet-endpoint"),
     path('orders/', OrderGeneralEndpoints.as_view(), name="orders-endpoint"),
     path('orders/<int:id>/', OrderView.as_view(), name="orders-products-endpoint"),
     path('orders/any/', AnyProductOrdersView.as_view(), name="-any-orders-endpoint"),

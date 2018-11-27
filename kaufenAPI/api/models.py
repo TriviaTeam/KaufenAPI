@@ -100,6 +100,12 @@ class Client(models.Model):
 		('Birthdate')
 	)
 
+	adress = models.CharField(
+		('Adress'),
+		help_text=("Client Adress"),
+		max_length=200,
+	)
+
 	def __str__(self):
 	    """
 	    Returns the object as a string, the attribute that will represent
@@ -114,29 +120,6 @@ class Client(models.Model):
 	    """
 	    verbose_name = ("Client")
 	    verbose_name_plural = ("Clients")
-
-
-class Wallet(models.Model):
-
-	id = models.AutoField(
-		primary_key=True
-	)
-
-	client = models.ForeignKey(
-		Client,
-		on_delete=models.CASCADE
-	)
-
-	cvv = models.IntegerField(
-		('Credit card CVV'),
-		default=None,
-	)
-
-	credit_card_number = models.CharField(
-		('Credit card number'),
-		default=None,
-		max_length=20,
-	)
 
 
 class OrderList(models.Model):
