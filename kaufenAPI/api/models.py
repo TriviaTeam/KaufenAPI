@@ -104,6 +104,7 @@ class Client(models.Model):
 		('Adress'),
 		help_text=("Client Adress"),
 		max_length=200,
+		default=None
 	)
 
 	def __str__(self):
