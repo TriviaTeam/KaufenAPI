@@ -33,7 +33,7 @@ class AnyProductOrdersView(APIView):
 				data={"ERRO":"ORDEM NÃO ENCONTRADA"}
 				status_code = status.HTTP_400_BAD_REQUEST
 
-		return return Response(data, status=status_code)
+		return Response(data, status=status_code)
 
 	def post(self, request, format=None):
 
@@ -107,7 +107,7 @@ class AnyProductOrdersView(APIView):
 		order = AnyProductOrder(
 			client=client,
 			products=products,
-			total=total
+			total=total,
 			status=StatusCode['in_line']
 		)
 

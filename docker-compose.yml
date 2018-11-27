@@ -4,11 +4,8 @@ version: '3.5'
 services:
   db:
     image: postgres:latest
-    environment:
-      POSTGRES_USER: kaufenuser
-      POSTGRES_PASSWORD: kaufen123
-      POSTGRES_DB: kaufendb
-      PGDATA: /tmp/pgdata
+    env_file:
+      - .env
     networks:
       - proxynet
   
@@ -28,4 +25,4 @@ services:
 
 networks:
   proxynet:
-    name: GamesBI-network
+    name: Kaufen-network
