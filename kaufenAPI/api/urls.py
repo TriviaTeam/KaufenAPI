@@ -1,6 +1,6 @@
 from django.urls import include, path
 from .views import *
-from .client_views import ClientEndpoint, ClientOrdersViewEndpoint, WalletView
+from .client_views import ClientEndpoint, ClientOrdersViewEndpoint
 from .store_view import StoreEndpoint
 from .products_view import ProductsEndpoints
 from .orders_views import OrderGeneralEndpoints, OrderView

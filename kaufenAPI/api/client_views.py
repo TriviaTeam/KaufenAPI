@@ -9,13 +9,12 @@ from .statuscode import StatusCode
 from .serializers import(
 	ClientSerializer, ProductSerializer,
 	OrderSerializer, AnyProductOrderSerializer,
-	AnyProductSerializer, WalletSerializer
+	AnyProductSerializer
 )
 
 from .models import (
 	Product, Client,
-	Wallet, OrderList,
-	AnyProductOrder, AnyProduct,	
+	OrderList, AnyProductOrder, AnyProduct,	
 )
 
 
