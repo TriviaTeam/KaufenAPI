@@ -190,6 +190,10 @@ class AnyProductOrder(models.Model):
 		on_delete=models.CASCADE
 	)
 
+	products = models.ManyToManyField(
+		AnyProduct,
+	)
+
 	total = models.FloatField(
 		('Order total price')
 	)
@@ -231,9 +235,8 @@ class AnyProduct(models.Model):
 		max_length=100,
 	)
 
-	order = models.ForeignKey(
-		AnyProductOrder,
-		on_delete=models.CASCADE
+	price_estimative = models.FloatField(
+		('Estimated Price'),
 	)
 
 	def __str__(self):
